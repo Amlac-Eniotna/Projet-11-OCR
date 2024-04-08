@@ -1,25 +1,35 @@
 import Logo from 'components/Logo'
 import Linkto from 'components/Linkto'
+import { useSelector } from 'react-redux'
 
-function Header({
-  navData,
-}: {
-  navData: { fa: string; text: string; path: string }[]
-}) {
+function Header() {
+  const userName = useSelector((state) => state.userName)
   return (
     <nav className="main-nav">
       <Logo className="main-nav-logo" />
       <div>
-        {navData.map(
-          ({ fa, text, path }: { fa: string; text: string; path: string }) => (
+        {userName !== '' ? (
+          <>
             <Linkto
               className="main-nav-item"
-              fa={fa}
-              text={' ' + text + ' '}
-              path={path}
-              key={text}
+              fa="fa fa-user-circle"
+              text={' ' + userName + ' '}
+              path="/user"
             ></Linkto>
-          )
+            <Linkto
+              className="main-nav-item"
+              fa="fa fa-sign-out"
+              text={' ' + 'Log Out' + ' '}
+              path="/"
+            ></Linkto>{' '}
+          </>
+        ) : (
+          <Linkto
+            className="main-nav-item"
+            fa="fa fa-user-circle"
+            text={' ' + 'Sign In' + ' '}
+            path="/login"
+          ></Linkto>
         )}
       </div>
     </nav>
