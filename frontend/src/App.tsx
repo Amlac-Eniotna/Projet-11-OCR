@@ -6,24 +6,11 @@ import User from 'pages/User'
 import Header from 'containers/Header'
 import Footer from 'containers/Footer'
 
-let navData = [
-  {
-    fa: 'fa fa-user-circle',
-    text: 'Sign In',
-    path: '/login',
-  },
-  {
-    fa: 'fa fa-sign-out',
-    text: 'Log Out',
-    path: '/',
-  },
-]
-
 const App = () => {
   return (
     <React.StrictMode>
       <Router>
-        <Header navData={navData} />
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

@@ -1,6 +1,7 @@
 import chatIcon from 'assets/icon-chat.webp'
 import moneyIcon from 'assets/icon-money.webp'
 import securityIcon from 'assets/icon-security.webp'
+import Feature from 'src/components/FeatureItem'
 
 function Home() {
   return (
@@ -19,31 +20,26 @@ function Home() {
         </div>
         <section className="features">
           <h2 className="sr-only">Features</h2>
-          <div className="feature-item">
-            <img src={chatIcon} alt="Chat Icon" className="feature-icon" />
-            <h3 className="feature-item-title">You are our #1 priority</h3>
-            <p>
-              Need to talk to a representative? You can get in touch through our
-              24/7 chat or through a phone call in less than 5 minutes.
-            </p>
-          </div>
-          <div className="feature-item">
-            <img src={moneyIcon} alt="Chat Icon" className="feature-icon" />
-            <h3 className="feature-item-title">
-              More savings means higher rates
-            </h3>
-            <p>
-              The more you save with us, the higher your interest rate will be!
-            </p>
-          </div>
-          <div className="feature-item">
-            <img src={securityIcon} alt="Chat Icon" className="feature-icon" />
-            <h3 className="feature-item-title">Security you can trust</h3>
-            <p>
-              We use top of the line encryption to make sure your data and money
-              is always safe.
-            </p>
-          </div>
+          <Feature
+            src={chatIcon}
+            alt="Chat Icon"
+            title="You are our #1 priority"
+            text="Need to talk to a representative? You can get in touch through our 24/7
+        chat or through a phone call in less than 5 minutes."
+          />
+          <Feature
+            src={moneyIcon}
+            alt="Money Icon"
+            title="More savings means higher rates"
+            text="The more you save with us, the higher your interest rate will be!"
+          />
+          <Feature
+            src={securityIcon}
+            alt="Security Icon"
+            title="Security you can trust"
+            text="We use top of the line encryption to make sure your data and money
+            is always safe."
+          />
         </section>
       </main>
     </>
