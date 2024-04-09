@@ -1,6 +1,12 @@
 import Account from 'src/components/Account'
+import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { userData } from 'src/type'
+import EditUserInfo from 'src/containers/EditUserInfo'
 
 function User() {
+  const name: userData = useSelector((state) => state)
+
   return (
     <>
       <main className="main bg-dark">
@@ -8,7 +14,7 @@ function User() {
           <h1>
             Welcome back
             <br />
-            Tony Jarvis!
+            {name.firstName} {name.lastName}!
           </h1>
           <button className="edit-button">Edit Name</button>
         </div>

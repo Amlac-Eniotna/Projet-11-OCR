@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
   const [username, setUsername] = useState('')
@@ -8,11 +8,19 @@ function Login() {
   const [click, setClick] = useState(false)
   const [btn, setBtn] = useState(false)
   const [remember, setRemember] = useState(false)
+  const token = useSelector((state) => state.token)
+
+  const navigate = useNavigate()
+
   const dispatch = useDispatch()
 
+  // const formValue = {
+  //   email: username,
+  //   password: password,
+  // }
   const formValue = {
-    email: username,
-    password: password,
+    email: 'tony@stark.com',
+    password: 'password123',
   }
   useEffect(() => {
     async function asyncer() {
@@ -25,8 +33,12 @@ function Login() {
           } else {
             localStorage.removeItem('token')
           }
+          navigate('/user')
         }
       }
+    }
+    if (token !== '') {
+      navigate('/user')
     }
     asyncer()
   }, [btn])
