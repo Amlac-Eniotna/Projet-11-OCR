@@ -9,6 +9,7 @@ let initialState: userData = {
   lastName: '',
   userName: '',
   token: '',
+  connected: false,
 }
 
 export const login = () => ({ type: 'login' })
@@ -25,16 +26,18 @@ function reducer(state = initialState, action: action) {
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
         userName: action.payload.userName,
+        connected: true,
       }
     case 'logout':
       return {
         ...initialState,
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
-        userName: action.payload.userName,
+        connected: false,
       }
     case 'rename':
-      return { ...state }
+      return {
+        ...state,
+        userName: action.payload.userName,
+      }
     default:
       return state
   }

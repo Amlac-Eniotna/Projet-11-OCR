@@ -4,6 +4,7 @@ export type userData = {
   lastName: string
   userName: string
   token: string
+  connected: boolean
 }
 
 export type action = {

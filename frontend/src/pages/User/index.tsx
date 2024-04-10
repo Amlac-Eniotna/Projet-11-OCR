@@ -1,22 +1,43 @@
 import Account from 'src/components/Account'
-import { useSelector, useDispatch } from 'react-redux'
-import { useState } from 'react'
-import { userData } from 'src/type'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import EditUserInfo from 'src/containers/EditUserInfo'
 
 function User() {
-  const name: userData = useSelector((state) => state)
+  const [changeInfo, setChangeInfo] = useState(false)
+
+  const connected: boolean = useSelector((state) => state.connected)
+  const firstName: string = useSelector((state) => state.firstName)
+  const lastName: string = useSelector((state) => state.lastName)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (connected === false) navigate('/login')
+  })
 
   return (
     <>
       <main className="main bg-dark">
         <div className="header">
-          <h1>
-            Welcome back
-            <br />
-            {name.firstName} {name.lastName}!
-          </h1>
-          <button className="edit-button">Edit Name</button>
+          {changeInfo === false ? (
+            <>
+              <h1>
+                Welcome back
+                <br />
+                {firstName} {lastName}!
+              </h1>
+              <button
+                className="edit-button"
+                onClick={() => setChangeInfo(true)}
+              >
+                Edit Name
+              </button>
+            </>
+          ) : (
+            <EditUserInfo onClick={() => setChangeInfo(false)} />
+          )}
         </div>
         <h2 className="sr-only">Accounts</h2>
         <Account

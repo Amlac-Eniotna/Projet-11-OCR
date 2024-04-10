@@ -8,7 +8,7 @@ function Login() {
   const [click, setClick] = useState(false)
   const [btn, setBtn] = useState(false)
   const [remember, setRemember] = useState(false)
-  const token = useSelector((state) => state.token)
+  const connected = useSelector((state) => state.connected)
 
   const navigate = useNavigate()
 
@@ -37,11 +37,11 @@ function Login() {
         }
       }
     }
-    if (token !== '') {
+    if (connected === true) {
       navigate('/user')
     }
     asyncer()
-  }, [btn])
+  }, [btn, connected])
 
   return (
     <>

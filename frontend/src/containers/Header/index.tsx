@@ -8,8 +8,11 @@ function Header() {
 
   const userName = useSelector((state) => state.userName)
   const token = useSelector((state) => state.token)
+  const connected = useSelector((state) => state.connected)
 
   const dispatch = useDispatch()
+
+  const localToken = localStorage.getItem('token')
 
   useEffect(() => {
     async function fetcher() {
@@ -32,21 +35,24 @@ function Header() {
               userName: data.body.userName,
             },
           })
+        } else {
+          dispatch({ type: 'logout' })
+          localStorage.removeItem('token')
         }
       } catch (err) {
         console.error(err)
       }
     }
-    if (token !== '' && userName === '') {
+    if (token !== '' && connected === false) {
       fetcher()
+    } else if (token === '' && localToken !== null && connected === false) {
+      dispatch({ type: 'login', payload: localToken })
+    } else if (disconnect == true) {
+      setDisconnect(false)
+      dispatch({ type: 'logout' })
+      localStorage.removeItem('token')
     }
-  }, [token])
-
-  if (disconnect == true) {
-    setDisconnect(false)
-    dispatch({ type: 'logout' })
-    localStorage.removeItem('token')
-  }
+  }, [token, disconnect])
 
   return (
     <nav className="main-nav">
@@ -64,8 +70,10 @@ function Header() {
               className="main-nav-item"
               fa="fa fa-sign-out"
               text={' ' + 'Log Out' + ' '}
-              path="/"
-              onClick={() => setDisconnect(true)}
+              path="/login"
+              onClick={(): void => {
+                setDisconnect(true)
+              }}
             ></Linkto>{' '}
           </>
         ) : (
