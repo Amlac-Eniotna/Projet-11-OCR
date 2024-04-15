@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
+import { changeUserName } from 'src/services/fetch'
 
 function EditUserInfo({ onClick }) {
   const [error, setError] = useState(false)
@@ -8,35 +9,17 @@ function EditUserInfo({ onClick }) {
 
   const firstName: string = useSelector((state) => state.firstName)
   const lastName: string = useSelector((state) => state.lastName)
+  const userName: string = useSelector((state) => state.userName)
   const token: string = useSelector((state) => state.token)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    async function fetcher() {
-      try {
-        const res = await fetch('http://localhost:3001/api/v1/user/profile', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ userName: newUserName }),
-        })
-        const data = await res.json()
-        if (data.status === 200) {
-          dispatch({
-            type: 'rename',
-            payload: {
-              userName: newUserName,
-            },
-          })
-        }
-      } catch (err) {
-        console.error(err)
-      }
-    }
     if (saveBtn === true) {
-      fetcher()
+      const fetch = async () => {
+        const data = await changeUserName(token, newUserName)
+        dispatch(data)
+      }
+      fetch()
       setSaveBtn(false)
     }
   }, [saveBtn])
@@ -48,7 +31,7 @@ function EditUserInfo({ onClick }) {
         <div className="input-line">
           <label htmlFor="username">User name: </label>
           <input
-            defaultValue="username"
+            defaultValue={userName}
             className={error ? 'error-input' : ''}
             placeholder={error ? 'À compléter' : ''}
             type="text"
@@ -68,7 +51,7 @@ function EditUserInfo({ onClick }) {
           <button
             onClick={async (e) => {
               e.preventDefault()
-              if (newUserName !== '') {
+              if (newUserName !== userName && newUserName !== '') {
                 await setSaveBtn(true)
                 setError(false)
                 onClick()

@@ -4,7 +4,6 @@ import { userData, action } from 'src/type'
 import { useSelector } from 'react-redux'
 
 let initialState: userData = {
-  email: '',
   firstName: '',
   lastName: '',
   userName: '',
@@ -22,7 +21,6 @@ function reducer(state = initialState, action: action) {
     case 'getData':
       return {
         ...state,
-        email: action.payload.email,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
         userName: action.payload.userName,
