@@ -48,6 +48,7 @@ function EditUserInfo({ onClick }) {
         <div className="input-line">
           <label htmlFor="username">User name: </label>
           <input
+            defaultValue="username"
             className={error ? 'error-input' : ''}
             placeholder={error ? 'À compléter' : ''}
             type="text"
