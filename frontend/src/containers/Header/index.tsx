@@ -2,6 +2,7 @@ import Logo from 'components/Logo'
 import Linkto from 'components/Linkto'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
+import { getName } from 'src/services/fetch'
 
 function Header() {
   const [disconnect, setDisconnect] = useState(false)
@@ -12,41 +13,29 @@ function Header() {
 
   const dispatch = useDispatch()
 
-  const localToken = localStorage.getItem('token')
+  const storageToken = localStorage.getItem('token')
+
+  function dateVerify() {
+    const storageTime = new Date(localStorage.getItem('time'))
+    const currentTime = new Date()
+    if (
+      storageTime.getTime() + 60 * 60 * 1000 < currentTime.getTime() ||
+      storageTime.getTime() > currentTime.getTime()
+    ) {
+      localStorage.removeItem('token')
+    }
+  }
+  dateVerify()
 
   useEffect(() => {
-    async function fetcher() {
-      try {
-        const res = await fetch('http://localhost:3001/api/v1/user/profile', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        const data = await res.json()
-        if (data.status === 200) {
-          dispatch({
-            type: 'getData',
-            payload: {
-              email: data.body.email,
-              firstName: data.body.firstName,
-              lastName: data.body.lastName,
-              userName: data.body.userName,
-            },
-          })
-        } else {
-          dispatch({ type: 'logout' })
-          localStorage.removeItem('token')
-        }
-      } catch (err) {
-        console.error(err)
-      }
-    }
     if (token !== '' && connected === false) {
-      fetcher()
-    } else if (token === '' && localToken !== null && connected === false) {
-      dispatch({ type: 'login', payload: localToken })
+      const fetch = async () => {
+        const data = await getName(token)
+        dispatch(data)
+      }
+      fetch()
+    } else if (token === '' && storageToken !== null && connected === false) {
+      dispatch({ type: 'login', payload: storageToken })
     } else if (disconnect == true) {
       setDisconnect(false)
       dispatch({ type: 'logout' })
