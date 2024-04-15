@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { getToken } from 'src/services/fetch'
 
 function Login() {
   const [username, setUsername] = useState('')
@@ -23,24 +24,16 @@ function Login() {
     password: 'password123',
   }
   useEffect(() => {
-    async function asyncer() {
-      if (click) {
-        const data = await fetchData(formValue)
-        if (data.status === 200) {
-          dispatch({ type: 'login', payload: data.body.token })
-          if (remember) {
-            localStorage.setItem('token', data.body.token)
-          } else {
-            localStorage.removeItem('token')
-          }
-          navigate('/user')
-        }
+    if (click) {
+      const fetch = async () => {
+        const data = await getToken(remember, formValue)
+        dispatch(data)
       }
+      fetch()
     }
     if (connected === true) {
       navigate('/user')
     }
-    asyncer()
   }, [btn, connected])
 
   return (
@@ -55,6 +48,11 @@ function Login() {
               <input
                 type="text"
                 id="username"
+                defaultValue={
+                  localStorage.getItem('email')
+                    ? localStorage.getItem('email')
+                    : ''
+                }
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
@@ -92,19 +90,3 @@ function Login() {
 }
 
 export default Login
-
-async function fetchData(formValue: { email: string; password: string }) {
-  try {
-    const res = await fetch('http://localhost:3001/api/v1/user/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formValue),
-    })
-    const data = await res.json()
-    return data
-  } catch (err) {
-    console.error(err)
-  }
-}
