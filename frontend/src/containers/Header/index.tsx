@@ -19,7 +19,7 @@ function Header() {
     const storageTime = new Date(localStorage.getItem('time'))
     const currentTime = new Date()
     if (
-      storageTime.getTime() + 60 * 60 * 1000 < currentTime.getTime() ||
+      storageTime.getTime() + 10 * 60 * 1000 < currentTime.getTime() ||
       storageTime.getTime() > currentTime.getTime()
     ) {
       localStorage.removeItem('token')
