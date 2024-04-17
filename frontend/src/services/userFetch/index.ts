@@ -32,6 +32,7 @@ export async function getName(token: string) {
       },
     })
     const data = await res.json()
+    console.log(data)
     if (data.status === 200) {
       return {
         type: 'getData',
@@ -39,10 +40,11 @@ export async function getName(token: string) {
           firstName: data.body.firstName,
           lastName: data.body.lastName,
           userName: data.body.userName,
+          userId: data.body.id,
         },
       }
     } else {
-      localStorage.removeItem('token')
+      sessionStorage.removeItem('token')
       return { type: 'logout' }
     }
   } catch (err) {
@@ -64,8 +66,7 @@ export async function getToken(
     })
     const data = await res.json()
     if (data.status === 200) {
-      localStorage.setItem('token', data.body.token)
-      localStorage.setItem('time', new Date())
+      sessionStorage.setItem('token', data.body.token)
       if (remember) {
         localStorage.setItem('email', formValue.email)
       } else {

@@ -7,6 +7,7 @@ let initialState: userData = {
   firstName: '',
   lastName: '',
   userName: '',
+  userId: '',
   token: '',
   connected: false,
 }
@@ -24,6 +25,7 @@ function reducer(state = initialState, action: action) {
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
         userName: action.payload.userName,
+        userId: action.payload.id,
         connected: true,
       }
     case 'logout':
