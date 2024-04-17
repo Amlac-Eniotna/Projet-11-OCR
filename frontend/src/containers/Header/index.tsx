@@ -2,7 +2,7 @@ import Logo from 'components/Logo'
 import Linkto from 'components/Linkto'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { getName } from 'src/services/fetch'
+import { getName } from 'src/services/userFetch'
 
 function Header() {
   const [disconnect, setDisconnect] = useState(false)
@@ -13,19 +13,7 @@ function Header() {
 
   const dispatch = useDispatch()
 
-  const storageToken = localStorage.getItem('token')
-
-  function dateVerify() {
-    const storageTime = new Date(localStorage.getItem('time'))
-    const currentTime = new Date()
-    if (
-      storageTime.getTime() + 10 * 60 * 1000 < currentTime.getTime() ||
-      storageTime.getTime() > currentTime.getTime()
-    ) {
-      localStorage.removeItem('token')
-    }
-  }
-  dateVerify()
+  const storageToken = sessionStorage.getItem('token')
 
   useEffect(() => {
     if (token !== '' && connected === false) {
@@ -39,7 +27,7 @@ function Header() {
     } else if (disconnect == true) {
       setDisconnect(false)
       dispatch({ type: 'logout' })
-      localStorage.removeItem('token')
+      sessionStorage.removeItem('token')
     }
   }, [token, disconnect])
 
