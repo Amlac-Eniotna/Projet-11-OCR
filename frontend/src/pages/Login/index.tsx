@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { getToken } from 'src/services/fetch'
+import { getToken } from 'src/services/userFetch'
 
 function Login() {
   const [username, setUsername] = useState('')

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
-import { changeUserName } from 'src/services/fetch'
+import { changeUserName } from 'src/services/userFetch'
 
 function EditUserInfo({ onClick }) {
   const [error, setError] = useState(false)
