@@ -3,6 +3,7 @@ export type userData = {
   lastName: string
   userName: string
   token: string
+  userId: string
   connected: boolean
 }
 
