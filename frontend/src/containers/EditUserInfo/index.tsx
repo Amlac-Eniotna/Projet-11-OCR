@@ -4,7 +4,7 @@ import { changeUserName } from 'src/services/userFetch'
 import { rename } from 'src/store/user/user.actions'
 import { stateType } from 'src/type'
 
-function EditUserInfo({ onClick }: { onClick: void }) {
+function EditUserInfo({ onClick }: { onClick: any }) {
   const [error, setError] = useState(false)
   const [saveBtn, setSaveBtn] = useState(false)
   const [newUserName, setNewUserName] = useState('')
@@ -19,6 +19,7 @@ function EditUserInfo({ onClick }: { onClick: void }) {
     if (saveBtn === true) {
       const fetch = async () => {
         const data = await changeUserName(token, newUserName)
+        console.log(data)
         dispatch(rename(data))
       }
       fetch()

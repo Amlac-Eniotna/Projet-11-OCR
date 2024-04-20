@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react'
 import { Link } from 'react-router-dom'
 
 function Linkto({
@@ -11,7 +12,7 @@ function Linkto({
   className: string
   text: string
   path: string
-  onClick?: void
+  onClick?: MouseEventHandler<HTMLAnchorElement>
 }) {
   return (
     <Link to={path} className={className} onClick={onClick}>

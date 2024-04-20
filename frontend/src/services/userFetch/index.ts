@@ -9,8 +9,9 @@ export async function changeUserName(token: string, newUserName: string) {
       body: JSON.stringify({ userName: newUserName }),
     })
     const data = await res.json()
+    const dataUserName: string = data.body.userName
     if (data.status === 200) {
-      return { userName: data.body.userName }
+      return { userName: dataUserName }
     }
   } catch (err) {
     console.error(err)
@@ -27,14 +28,19 @@ export async function getName(token: string) {
       },
     })
     const data = await res.json()
-    console.log(data)
+    const dataTypage: {
+      firstName: string
+      lastName: string
+      userName: string
+      userId: string
+    } = {
+      firstName: data.body.firstName,
+      lastName: data.body.lastName,
+      userName: data.body.userName,
+      userId: data.body.id,
+    }
     if (data.status === 200) {
-      return {
-        firstName: data.body.firstName,
-        lastName: data.body.lastName,
-        userName: data.body.userName,
-        userId: data.body.id,
-      }
+      return dataTypage
     } else {
       sessionStorage.removeItem('token')
       return false
