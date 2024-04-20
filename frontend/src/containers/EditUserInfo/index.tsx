@@ -1,23 +1,24 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { changeUserName } from 'src/services/userFetch'
+import { rename } from 'src/store/user/user.actions'
 
 function EditUserInfo({ onClick }) {
   const [error, setError] = useState(false)
   const [saveBtn, setSaveBtn] = useState(false)
   const [newUserName, setNewUserName] = useState('')
 
-  const firstName: string = useSelector((state) => state.firstName)
-  const lastName: string = useSelector((state) => state.lastName)
-  const userName: string = useSelector((state) => state.userName)
-  const token: string = useSelector((state) => state.token)
+  const firstName: string = useSelector((state) => state.user.firstName)
+  const lastName: string = useSelector((state) => state.user.lastName)
+  const userName: string = useSelector((state) => state.user.userName)
+  const token: string = useSelector((state) => state.user.token)
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (saveBtn === true) {
       const fetch = async () => {
         const data = await changeUserName(token, newUserName)
-        dispatch(data)
+        dispatch(rename(data))
       }
       fetch()
       setSaveBtn(false)

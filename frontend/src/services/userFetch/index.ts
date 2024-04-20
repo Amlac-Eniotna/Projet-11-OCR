@@ -10,12 +10,7 @@ export async function changeUserName(token: string, newUserName: string) {
     })
     const data = await res.json()
     if (data.status === 200) {
-      return {
-        type: 'rename',
-        payload: {
-          userName: newUserName,
-        },
-      }
+      return data.body.userName
     }
   } catch (err) {
     console.error(err)
@@ -32,23 +27,20 @@ export async function getName(token: string) {
       },
     })
     const data = await res.json()
-    console.log(data)
     if (data.status === 200) {
       return {
-        type: 'getData',
-        payload: {
-          firstName: data.body.firstName,
-          lastName: data.body.lastName,
-          userName: data.body.userName,
-          userId: data.body.id,
-        },
+        firstName: data.body.firstName,
+        lastName: data.body.lastName,
+        userName: data.body.userName,
+        userId: data.body.id,
       }
     } else {
       sessionStorage.removeItem('token')
-      return { type: 'logout' }
+      return false
     }
   } catch (err) {
     console.error(err)
+    return false
   }
 }
 
@@ -72,9 +64,12 @@ export async function getToken(
       } else {
         localStorage.removeItem('email')
       }
-      return { type: 'login', payload: data.body.token }
+      return data.body.token
+    } else {
+      return false
     }
   } catch (err) {
     console.error(err)
+    return false
   }
 }

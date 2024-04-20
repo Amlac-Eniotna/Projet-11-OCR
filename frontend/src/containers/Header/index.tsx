@@ -3,13 +3,14 @@ import Linkto from 'components/Linkto'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getName } from 'src/services/userFetch'
+import { login, logout, getData } from 'src/store/user/user.actions'
 
 function Header() {
   const [disconnect, setDisconnect] = useState(false)
 
-  const userName = useSelector((state) => state.userName)
-  const token = useSelector((state) => state.token)
-  const connected = useSelector((state) => state.connected)
+  const userName = useSelector((state) => state.user.userName)
+  const token = useSelector((state) => state.user.token)
+  const connected = useSelector((state) => state.user.connected)
 
   const dispatch = useDispatch()
 
@@ -19,15 +20,20 @@ function Header() {
     if (token !== '' && connected === false) {
       const fetch = async () => {
         const data = await getName(token)
-        dispatch(data)
+        if (data) {
+          dispatch(getData(data))
+        } else {
+          dispatch(logout())
+        }
       }
       fetch()
     } else if (token === '' && storageToken !== null && connected === false) {
-      dispatch({ type: 'login', payload: storageToken })
+      dispatch(login(storageToken))
     } else if (disconnect == true) {
       setDisconnect(false)
-      dispatch({ type: 'logout' })
+      dispatch(logout())
       sessionStorage.removeItem('token')
+      localStorage.removeItem('email')
     }
   }, [token, disconnect])
 

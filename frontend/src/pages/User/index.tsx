@@ -7,9 +7,9 @@ import EditUserInfo from 'src/containers/EditUserInfo'
 function User() {
   const [changeInfo, setChangeInfo] = useState(false)
 
-  const connected: boolean = useSelector((state) => state.connected)
-  const firstName: string = useSelector((state) => state.firstName)
-  const lastName: string = useSelector((state) => state.lastName)
+  const connected: boolean = useSelector((state) => state.user.connected)
+  const firstName: string = useSelector((state) => state.user.firstName)
+  const lastName: string = useSelector((state) => state.user.lastName)
 
   const navigate = useNavigate()
 

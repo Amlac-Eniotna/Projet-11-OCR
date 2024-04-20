@@ -7,7 +7,7 @@ export type userData = {
   connected: boolean
 }
 
-export type action = {
-  type: string
-  payload?: string
-}
+// export type action = {
+//   type: string
+//   payload?: string
+// }
