@@ -10,7 +10,7 @@ export async function changeUserName(token: string, newUserName: string) {
     })
     const data = await res.json()
     if (data.status === 200) {
-      return data.body.userName
+      return { userName: data.body.userName }
     }
   } catch (err) {
     console.error(err)
@@ -27,6 +27,7 @@ export async function getName(token: string) {
       },
     })
     const data = await res.json()
+    console.log(data)
     if (data.status === 200) {
       return {
         firstName: data.body.firstName,
@@ -64,7 +65,7 @@ export async function getToken(
       } else {
         localStorage.removeItem('email')
       }
-      return data.body.token
+      return { token: data.body.token }
     } else {
       return false
     }

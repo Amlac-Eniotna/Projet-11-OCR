@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getToken } from 'src/services/userFetch'
 import { login } from 'src/store/user/user.actions'
+import { stateType } from 'src/type'
 
 function Login() {
   const [username, setUsername] = useState('')
@@ -10,7 +11,7 @@ function Login() {
   const [click, setClick] = useState(false)
   const [btn, setBtn] = useState(false)
   const [remember, setRemember] = useState(false)
-  const connected = useSelector((state) => state.user.connected)
+  const connected = useSelector((state: stateType) => state.user.connected)
 
   const navigate = useNavigate()
 
@@ -27,8 +28,8 @@ function Login() {
   useEffect(() => {
     if (click) {
       const fetch = async () => {
-        const token = await getToken(remember, formValue)
-        dispatch(login(token))
+        const data = await getToken(remember, formValue)
+        dispatch(login(data))
       }
       fetch()
     }

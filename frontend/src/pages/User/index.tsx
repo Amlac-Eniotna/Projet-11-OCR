@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import EditUserInfo from 'src/containers/EditUserInfo'
+import { stateType } from 'src/type'
 
 function User() {
   const [changeInfo, setChangeInfo] = useState(false)
 
-  const connected: boolean = useSelector((state) => state.user.connected)
-  const firstName: string = useSelector((state) => state.user.firstName)
-  const lastName: string = useSelector((state) => state.user.lastName)
+  const connected = useSelector((state: stateType) => state.user.connected)
+  const firstName = useSelector((state: stateType) => state.user.firstName)
+  const lastName = useSelector((state: stateType) => state.user.lastName)
 
   const navigate = useNavigate()
 

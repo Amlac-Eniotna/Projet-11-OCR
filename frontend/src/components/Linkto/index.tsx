@@ -11,6 +11,7 @@ function Linkto({
   className: string
   text: string
   path: string
+  onClick?: void
 }) {
   return (
     <Link to={path} className={className} onClick={onClick}>

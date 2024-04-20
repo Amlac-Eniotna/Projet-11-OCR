@@ -4,13 +4,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getName } from 'src/services/userFetch'
 import { login, logout, getData } from 'src/store/user/user.actions'
+import { stateType } from 'src/type'
 
 function Header() {
   const [disconnect, setDisconnect] = useState(false)
 
-  const userName = useSelector((state) => state.user.userName)
-  const token = useSelector((state) => state.user.token)
-  const connected = useSelector((state) => state.user.connected)
+  const userName = useSelector((state: stateType) => state.user.userName)
+  const token = useSelector((state: stateType) => state.user.token)
+  const connected = useSelector((state: stateType) => state.user.connected)
 
   const dispatch = useDispatch()
 
@@ -28,7 +29,7 @@ function Header() {
       }
       fetch()
     } else if (token === '' && storageToken !== null && connected === false) {
-      dispatch(login(storageToken))
+      dispatch(login({ token: storageToken }))
     } else if (disconnect == true) {
       setDisconnect(false)
       dispatch(logout())
@@ -54,7 +55,7 @@ function Header() {
               fa="fa fa-sign-out"
               text={' ' + 'Log Out' + ' '}
               path="/login"
-              onClick={(): void => {
+              onClick={() => {
                 setDisconnect(true)
               }}
             ></Linkto>{' '}
