@@ -1,7 +1,9 @@
-import { userData, userAction } from 'src/type'
-import { GET_DATA, LOGIN, LOGOUT, RENAME } from './user.actions'
+import { userData } from 'src/type'
+import { login, getData, logout, rename } from './user.actions'
+import { createReducer } from '@reduxjs/toolkit'
 
 let initialState: userData = {
+  email: '',
   firstName: '',
   lastName: '',
   userName: '',
@@ -10,11 +12,12 @@ let initialState: userData = {
   connected: false,
 }
 
-export function userReducer(state = initialState, action: userAction) {
-  switch (action.type) {
-    case LOGIN:
+export const userReducer = createReducer(initialState, (builder) => {
+  return builder
+    .addCase(login, (state, action) => {
       return { ...state, token: action.payload.token }
-    case GET_DATA:
+    })
+    .addCase(getData, (state, action) => {
       return {
         ...state,
         firstName: action.payload.firstName,
@@ -23,17 +26,16 @@ export function userReducer(state = initialState, action: userAction) {
         userId: action.payload.userId,
         connected: true,
       }
-    case LOGOUT:
+    })
+    .addCase(logout, () => {
       return {
         ...initialState,
-        connected: false,
       }
-    case RENAME:
+    })
+    .addCase(rename, (state, action) => {
       return {
         ...state,
         userName: action.payload.userName,
       }
-    default:
-      return state
-  }
-}
+    })
+})

@@ -1,4 +1,4 @@
-import { userDataUncompleted } from 'src/type'
+import { createAction } from '@reduxjs/toolkit'
 
 // Type
 export const LOGIN = 'login'
@@ -7,19 +7,10 @@ export const GET_DATA = 'getData'
 export const RENAME = 'rename'
 
 // Action
-export const login = (payload: userDataUncompleted | undefined) => ({
-  type: LOGIN,
-  payload,
-})
+export const login = createAction(LOGIN)
 
-export const logout = () => ({ type: LOGOUT })
+export const logout = createAction(LOGOUT)
 
-export const getData = (payload: userDataUncompleted | undefined) => ({
-  type: GET_DATA,
-  payload,
-})
+export const getData = createAction(GET_DATA)
 
-export const rename = (payload: userDataUncompleted | undefined) => ({
-  type: RENAME,
-  payload,
-})
+export const rename = createAction(RENAME)

@@ -5,20 +5,21 @@ export type userData = {
   token: string
   userId: string
   connected: boolean
+  email: string
 }
 
 export type userDataUncompleted = {
+  email?: string
   firstName?: string
   lastName?: string
   userName?: string
   token?: string
   userId?: string
-  connected?: boolean
 }
 
 export type userAction = {
   type: string
-  payload: userData
+  payload: userDataUncompleted
 }
 
 export type stateType = {
