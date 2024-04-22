@@ -11,6 +11,7 @@ function Login() {
   const [click, setClick] = useState(false)
   const [btn, setBtn] = useState(false)
   const [remember, setRemember] = useState(false)
+  const [error, setError] = useState(false)
   const connected = useSelector((state: stateType) => state.user.connected)
 
   const navigate = useNavigate()
@@ -29,7 +30,12 @@ function Login() {
     if (click) {
       const fetch = async () => {
         const data = await getToken(remember, formValue)
-        dispatch(login(data))
+        if (data) {
+          dispatch(login(data))
+          setError(false)
+        } else {
+          setError(true)
+        }
       }
       fetch()
     }
@@ -44,6 +50,9 @@ function Login() {
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
+          {error ? (
+            <p className="error-text">Your username or password is invalid</p>
+          ) : null}
           <form>
             <div className="input-wrapper">
               <label htmlFor="username">Username</label>
@@ -55,6 +64,7 @@ function Login() {
                     ? localStorage.getItem('email')
                     : ''
                 }
+                className={error ? 'error-input' : ''}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
@@ -64,6 +74,7 @@ function Login() {
                 type="password"
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
+                className={error ? 'error-input' : ''}
               />
             </div>
             <div className="input-remember">

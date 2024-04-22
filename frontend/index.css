@@ -229,6 +229,10 @@ body {
   font-size: 1.2rem;
 }
 
+.error-text {
+  color: crimson;
+}
+
 .error-input {
   color: white;
   background-color: crimson;

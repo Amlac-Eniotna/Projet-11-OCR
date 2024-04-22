@@ -28,18 +28,18 @@ export async function getName(token: string) {
       },
     })
     const data = await res.json()
-    const dataTypage: {
-      firstName: string
-      lastName: string
-      userName: string
-      userId: string
-    } = {
-      firstName: data.body.firstName,
-      lastName: data.body.lastName,
-      userName: data.body.userName,
-      userId: data.body.id,
-    }
     if (data.status === 200) {
+      const dataTypage: {
+        firstName: string
+        lastName: string
+        userName: string
+        userId: string
+      } = {
+        firstName: data.body.firstName,
+        lastName: data.body.lastName,
+        userName: data.body.userName,
+        userId: data.body.id,
+      }
       return dataTypage
     } else {
       sessionStorage.removeItem('token')
@@ -71,9 +71,10 @@ export async function getToken(
       } else {
         localStorage.removeItem('email')
       }
-      return { token: data.body.token }
+      const token: string = data.body.token
+      return { token: token }
     } else {
-      return false
+      return null
     }
   } catch (err) {
     console.error(err)

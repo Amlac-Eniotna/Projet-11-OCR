@@ -19,7 +19,6 @@ function EditUserInfo({ onClick }: { onClick: any }) {
     if (saveBtn === true) {
       const fetch = async () => {
         const data = await changeUserName(token, newUserName)
-        console.log(data)
         dispatch(rename(data))
       }
       fetch()
@@ -36,7 +35,7 @@ function EditUserInfo({ onClick }: { onClick: any }) {
           <input
             defaultValue={userName}
             className={error ? 'error-input' : ''}
-            placeholder={error ? 'À compléter' : ''}
+            placeholder={error ? 'To be completed' : ''}
             type="text"
             id="username"
             onChange={(e) => setNewUserName(e.target.value)}
