@@ -11,6 +11,7 @@ function Login() {
   const [click, setClick] = useState(false)
   const [btn, setBtn] = useState(false)
   const [remember, setRemember] = useState(false)
+  const [msgError, setMsgError] = useState('')
   const [error, setError] = useState(false)
   const connected = useSelector((state: stateType) => state.user.connected)
 
@@ -30,10 +31,14 @@ function Login() {
     if (click) {
       const fetch = async () => {
         const data = await getToken(remember, formValue)
-        if (data) {
+        if (data.status === 200) {
           dispatch(login(data))
           setError(false)
+        } else if (data.status === 400) {
+          setError(true)
+          setMsgError('Your username or password is invalid')
         } else {
+          setMsgError('Server unavailable, please try again later')
           setError(true)
         }
       }
@@ -50,9 +55,7 @@ function Login() {
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
-          {error ? (
-            <p className="error-text">Your username or password is invalid</p>
-          ) : null}
+          {msgError !== '' ? <p className="error-text">{msgError}</p> : null}
           <form>
             <div className="input-wrapper">
               <label htmlFor="username">Username</label>

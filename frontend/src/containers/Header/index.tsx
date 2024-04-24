@@ -21,7 +21,7 @@ function Header() {
     if (token !== '' && connected === false) {
       const fetch = async () => {
         const data = await getName(token)
-        if (data) {
+        if (data.status === 200) {
           dispatch(getData(data))
         } else {
           dispatch(logout())

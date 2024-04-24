@@ -5,6 +5,7 @@ import { rename } from 'src/store/user/user.actions'
 import { stateType } from 'src/type'
 
 function EditUserInfo({ onClick }: { onClick: any }) {
+  const [msgError, setMsgError] = useState('')
   const [error, setError] = useState(false)
   const [saveBtn, setSaveBtn] = useState(false)
   const [newUserName, setNewUserName] = useState('')
@@ -19,16 +20,28 @@ function EditUserInfo({ onClick }: { onClick: any }) {
     if (saveBtn === true) {
       const fetch = async () => {
         const data = await changeUserName(token, newUserName)
-        dispatch(rename(data))
+        console.log(data)
+        if (data.status === 401) {
+          setMsgError('Please log in again')
+          setError(true)
+        } else if (data.status === 0) {
+          setMsgError('Server unavailable, please try again later')
+          setError(true)
+        } else if (data.status === 200) {
+          dispatch(rename(data))
+          setMsgError('')
+          onClick()
+        }
       }
-      fetch()
       setSaveBtn(false)
+      fetch()
     }
   }, [saveBtn])
 
   return (
     <>
       <h1>Edit user info</h1>
+      {msgError === '' ? null : <p className="error-text">{msgError}</p>}
       <form className="form-edit">
         <div className="input-line">
           <label htmlFor="username">User name: </label>
@@ -56,8 +69,8 @@ function EditUserInfo({ onClick }: { onClick: any }) {
               if (newUserName !== userName && newUserName !== '') {
                 await setSaveBtn(true)
                 setError(false)
-                onClick()
               } else {
+                setMsgError('Please enter a new username')
                 setError(true)
               }
             }}
