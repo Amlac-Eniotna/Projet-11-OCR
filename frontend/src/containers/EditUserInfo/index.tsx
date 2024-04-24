@@ -20,7 +20,6 @@ function EditUserInfo({ onClick }: { onClick: any }) {
     if (saveBtn === true) {
       const fetch = async () => {
         const data = await changeUserName(token, newUserName)
-        console.log(data)
         if (data.status === 401) {
           setMsgError('Please log in again')
           setError(true)
