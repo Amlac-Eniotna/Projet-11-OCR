@@ -15,14 +15,19 @@ let initialState: userData = {
 export const userReducer = createReducer(initialState, (builder) => {
   return builder
     .addCase(login, (state, action) => {
-      return { ...state, token: action.payload.token }
+      // @ts-ignore
+      return { ...state, token: action.payload.token } // payload et considéré comme n'étant pas présent à coup sur, pareil en dessous
     })
     .addCase(getData, (state, action) => {
       return {
         ...state,
+        // @ts-ignore
         firstName: action.payload.firstName,
+        // @ts-ignore
         lastName: action.payload.lastName,
+        // @ts-ignore
         userName: action.payload.userName,
+        // @ts-ignore
         userId: action.payload.userId,
         connected: true,
       }
@@ -35,6 +40,7 @@ export const userReducer = createReducer(initialState, (builder) => {
     .addCase(rename, (state, action) => {
       return {
         ...state,
+        // @ts-ignore
         userName: action.payload.userName,
       }
     })

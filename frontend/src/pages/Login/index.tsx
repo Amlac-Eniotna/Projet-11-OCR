@@ -19,20 +19,20 @@ function Login() {
 
   const dispatch = useDispatch()
 
-  // const formValue = {
-  //   email: username,
-  //   password: password,
-  // }
+  if (localStorage.getItem('email') && username === '')
+    setUsername(localStorage.getItem('email'))
+
   const formValue = {
-    email: 'tony@stark.com',
-    password: 'password123',
+    email: username,
+    password: password,
   }
   useEffect(() => {
     if (click) {
       const fetch = async () => {
         const data = await getToken(remember, formValue)
         if (data.status === 200) {
-          dispatch(login(data))
+          // @ts-ignore
+          dispatch(login(data)) // pb de typage des actions redux
           setError(false)
         } else if (data.status === 400) {
           setError(true)
@@ -62,11 +62,7 @@ function Login() {
               <input
                 type="text"
                 id="username"
-                defaultValue={
-                  localStorage.getItem('email')
-                    ? localStorage.getItem('email')
-                    : ''
-                }
+                defaultValue={username}
                 className={error ? 'error-input' : ''}
                 onChange={(e) => setUsername(e.target.value)}
               />

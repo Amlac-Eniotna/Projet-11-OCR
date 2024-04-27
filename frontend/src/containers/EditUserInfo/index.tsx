@@ -27,7 +27,8 @@ function EditUserInfo({ onClick }: { onClick: any }) {
           setMsgError('Server unavailable, please try again later')
           setError(true)
         } else if (data.status === 200) {
-          dispatch(rename(data))
+          // @ts-ignore
+          dispatch(rename(data)) // pb de typage des actions redux
           setMsgError('')
           onClick()
         }

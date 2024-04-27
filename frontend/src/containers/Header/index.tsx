@@ -22,14 +22,16 @@ function Header() {
       const fetch = async () => {
         const data = await getName(token)
         if (data.status === 200) {
-          dispatch(getData(data))
+          //@ts-ignore
+          dispatch(getData(data)) // pb de typage des actions redux
         } else {
           dispatch(logout())
         }
       }
       fetch()
     } else if (token === '' && storageToken !== null && connected === false) {
-      dispatch(login({ token: storageToken }))
+      //@ts-ignore
+      dispatch(login({ token: storageToken })) // pb de typage des actions redux
     } else if (disconnect == true) {
       setDisconnect(false)
       dispatch(logout())
